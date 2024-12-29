@@ -1,0 +1,28 @@
+frontend:
+  image: etudiants-frontend
+  tag: latest
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 80
+
+backend:
+  image: etudiants-backend
+  tag: latest
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 8080
+  database:
+    url: jdbc:postgresql://database:5432/etudiants_db
+    username: postgres
+    password: randomR@@T1050
+
+database:
+  enabled: true
+  postgresqlUsername: postgres
+  postgresqlPassword: randomR@@T1050
+  postgresqlDatabase: etudiants_db
+  persistence:
+    enabled: true
+    size: 1Gi

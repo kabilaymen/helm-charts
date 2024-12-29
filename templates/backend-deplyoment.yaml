@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: "{{ .Values.backend.image }}:{{ .Values.backend.tag }}"
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: {{ .Values.backend.database.url }}
+        - name: SPRING_DATASOURCE_USERNAME
+          value: {{ .Values.backend.database.username }}
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: {{ .Values.backend.database.password }}
